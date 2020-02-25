@@ -57,6 +57,7 @@ public class PhysicsObject : MonoBehaviour
         if(distance > minMoveDistance)
         {
             int count = rb2d.Cast(move,contactFilter, hitBuffer, distance + shellRadius);
+            hitBufferList.Clear();
             for(int i = 0; i <count; i++)
             {
                 hitBufferList.Add(hitBuffer[i]);
