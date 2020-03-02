@@ -61,8 +61,8 @@ public class DeadzoneCamera : MonoBehaviour
         {
             if (limits[i].Contains(target.transform.position))
             {
-                Vector3 localOffsetMin = limits[i].min + camWorldRect.size * 0.5f;
-                Vector3 localOffsetMax = limits[i].max - camWorldRect.size * 0.5f;
+                Vector3 localOffsetMin = limits[i].min + camWorldRect.size * .1f;
+                Vector3 localOffsetMax = limits[i].max - camWorldRect.size * .25f;
 
                 localOffsetMin.z = localOffsetMax.z = smoothPos.z;
 

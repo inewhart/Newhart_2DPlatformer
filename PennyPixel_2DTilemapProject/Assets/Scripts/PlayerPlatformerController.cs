@@ -7,6 +7,7 @@ public class PlayerPlatformerController : PhysicsObject
     public float jumpSpeed = 7;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
+    public GameObject spikes;
     public float maxSpeed = 7;
     // Start is called before the first frame update
     void Awake()
@@ -38,5 +39,12 @@ public class PlayerPlatformerController : PhysicsObject
         animator.SetBool("grounded",grounded);
         animator.SetFloat("velocityX",Mathf.Abs(velocity.x) / maxSpeed);
         targetVelocity = move * maxSpeed;
+    }
+    public void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Spike"))
+        {
+            spikes.GetComponent<Animation>().Play("Spike trap");
+        }
     }
 }
