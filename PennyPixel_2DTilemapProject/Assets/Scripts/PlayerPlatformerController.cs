@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerPlatformerController : PhysicsObject
 {
@@ -46,15 +48,29 @@ public class PlayerPlatformerController : PhysicsObject
     {
         if(other.gameObject.CompareTag("Spike"))
         {
-            Debug.Log("Hep");
+            
             spikes.GetComponent<Animation>().Play("Spike trap");
             lives--;
-            this.transform.position = new Vector3(-1.69f,0,1);
+            StartCoroutine("resetPos");
+            Debug.Log(lives);
         }
         // if(other.gameObject.CompareTag("Spike"))
         // {
         //     lives--;
         //     Debug.Log("Hep");
         // }
+    }
+    IEnumerator resetPos() 
+    {
+        yield return new WaitForSeconds(.5f);
+        this.transform.position = new Vector3(-1.69f,0,1);
+    }
+    IEnumerator changeScene() 
+    {
+        yield return new WaitForSeconds(.5f);
+        if(lives <= 0)
+        {
+            SceneManager.LoadScene("End");
+        }
     }
 }
