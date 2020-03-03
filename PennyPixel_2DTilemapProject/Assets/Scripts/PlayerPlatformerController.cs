@@ -44,6 +44,7 @@ public class PlayerPlatformerController : PhysicsObject
     {
         if(other.gameObject.CompareTag("Spike"))
         {
+            Debug.Log("Hep");
             spikes.GetComponent<Animation>().Play("Spike trap");
         }
     }
