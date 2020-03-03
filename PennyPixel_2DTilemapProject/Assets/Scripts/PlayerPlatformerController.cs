@@ -17,7 +17,7 @@ public class PlayerPlatformerController : PhysicsObject
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        lives = 3;
+        lives = 4;
     }
 
     protected override void ComputeVelocity()
@@ -43,6 +43,10 @@ public class PlayerPlatformerController : PhysicsObject
         animator.SetBool("grounded",grounded);
         animator.SetFloat("velocityX",Mathf.Abs(velocity.x) / maxSpeed);
         targetVelocity = move * maxSpeed;
+        if(lives <= 0)
+        {
+            SceneManager.LoadScene("GameOver");
+        }
     }
     public void OnTriggerEnter2D(Collider2D other)
     {
@@ -50,8 +54,9 @@ public class PlayerPlatformerController : PhysicsObject
         {
             
             spikes.GetComponent<Animation>().Play("Spike trap");
-            lives--;
             StartCoroutine("resetPos");
+            lives--;
+            
             Debug.Log(lives);
         }
         // if(other.gameObject.CompareTag("Spike"))
@@ -64,13 +69,5 @@ public class PlayerPlatformerController : PhysicsObject
     {
         yield return new WaitForSeconds(.5f);
         this.transform.position = new Vector3(-1.69f,0,1);
-    }
-    IEnumerator changeScene() 
-    {
-        yield return new WaitForSeconds(.5f);
-        if(lives <= 0)
-        {
-            SceneManager.LoadScene("End");
-        }
     }
 }
