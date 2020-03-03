@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Through
   - Spike
+  - fire
   layers:
   - Default
   - TransparentFX

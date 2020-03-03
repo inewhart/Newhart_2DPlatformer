@@ -11,6 +11,7 @@ public class PlayerPlatformerController : PhysicsObject
     private Animator animator;
     private int lives;
     public GameObject spikes;
+    public GameObject fire;
     public float maxSpeed = 7;
     // Start is called before the first frame update
     void Awake()
@@ -57,6 +58,13 @@ public class PlayerPlatformerController : PhysicsObject
             StartCoroutine("resetPos");
             lives--;
             
+            Debug.Log(lives);
+        }
+        if(other.gameObject.CompareTag("fire"))
+        {
+            
+            Instantiate(fire,new Vector3(this.transform.position.x,this.transform.position.y +5,0),fire.transform.rotation);
+            StartCoroutine("resetPos");
             Debug.Log(lives);
         }
         // if(other.gameObject.CompareTag("Spike"))
