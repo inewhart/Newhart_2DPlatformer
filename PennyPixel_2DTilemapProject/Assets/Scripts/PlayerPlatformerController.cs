@@ -7,6 +7,7 @@ public class PlayerPlatformerController : PhysicsObject
     public float jumpSpeed = 7;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
+    private int lives;
     public GameObject spikes;
     public float maxSpeed = 7;
     // Start is called before the first frame update
@@ -14,6 +15,7 @@ public class PlayerPlatformerController : PhysicsObject
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        lives = 3;
     }
 
     protected override void ComputeVelocity()
@@ -40,12 +42,19 @@ public class PlayerPlatformerController : PhysicsObject
         animator.SetFloat("velocityX",Mathf.Abs(velocity.x) / maxSpeed);
         targetVelocity = move * maxSpeed;
     }
-    public void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.CompareTag("Spike"))
         {
             Debug.Log("Hep");
             spikes.GetComponent<Animation>().Play("Spike trap");
+            lives--;
+            this.transform.position = new Vector3(-1.69f,0,1);
         }
+        // if(other.gameObject.CompareTag("Spike"))
+        // {
+        //     lives--;
+        //     Debug.Log("Hep");
+        // }
     }
 }
