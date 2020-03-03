@@ -12,6 +12,6 @@ public class Button : MonoBehaviour
     }
     public void exitGame()
     {
-        Application.Quit();
+        UnityEditor.EditorApplication.isPlaying = false;
     }
 }

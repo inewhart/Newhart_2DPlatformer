@@ -18,7 +18,7 @@ public class PlayerPlatformerController : PhysicsObject
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        lives = 4;
+        lives = 3;
     }
 
     protected override void ComputeVelocity()
@@ -63,9 +63,17 @@ public class PlayerPlatformerController : PhysicsObject
         if(other.gameObject.CompareTag("fire"))
         {
             
-            Instantiate(fire,new Vector3(this.transform.position.x,this.transform.position.y +5,0),fire.transform.rotation);
-            StartCoroutine("resetPos");
+            Instantiate(fire,new Vector3(this.transform.position.x,this.transform.position.y + 5,0),fire.transform.rotation);
             Debug.Log(lives);
+        }
+        if(other.gameObject.CompareTag("Fireball"))
+        {
+            
+            
+            lives--;
+            Debug.Log(lives);
+            Destroy(other);
+            StartCoroutine("resetPos");
         }
         // if(other.gameObject.CompareTag("Spike"))
         // {
