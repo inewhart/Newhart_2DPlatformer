@@ -63,7 +63,7 @@ public class PlayerPlatformerController : PhysicsObject
         {
             currentlives--;
             PlayerPrefs.SetInt("lives",currentlives);
-            spikes.GetComponent<Animation>().Play("Spike trap");
+            // spikes.GetComponent<Animation>().Play("Spike trap");
             StartCoroutine("resetPos");
             Debug.Log(PlayerPrefs.GetInt("lives",currentlives));
         }
@@ -85,7 +85,7 @@ public class PlayerPlatformerController : PhysicsObject
     IEnumerator resetPos() 
     {
         yield return new WaitForSeconds(.1f);
-        this.transform.position = new Vector3(-1.69f,0,1);
+        this.transform.position = new Vector3(-1.69f,0,0);
         this.velocity = Vector3.zero;
     }
     public void Update()
