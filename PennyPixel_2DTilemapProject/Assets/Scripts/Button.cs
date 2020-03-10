@@ -8,10 +8,11 @@ public class Button : MonoBehaviour
 {
     public void changeScene()
     {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("Level1");
     }
     public void exitGame()
     {
         UnityEditor.EditorApplication.isPlaying = false;
+        Application.Quit();
     }
 }

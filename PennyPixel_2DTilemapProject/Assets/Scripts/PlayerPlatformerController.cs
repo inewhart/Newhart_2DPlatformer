@@ -81,12 +81,23 @@ public class PlayerPlatformerController : PhysicsObject
             Destroy(other);
             StartCoroutine("resetPos");
         }
+        if(other.gameObject.CompareTag("NextLevel"))
+        {
+            this.velocity = Vector3.zero;
+            StartCoroutine("nextLevel");
+            SceneManager.LoadScene("Level2");
+        }
     }
     IEnumerator resetPos() 
     {
         yield return new WaitForSeconds(.1f);
         this.transform.position = new Vector3(-1.69f,0,0);
         this.velocity = Vector3.zero;
+    }
+    IEnumerator nextLevel() 
+    {
+        yield return new WaitForSeconds(.2f);
+        
     }
     public void Update()
     {

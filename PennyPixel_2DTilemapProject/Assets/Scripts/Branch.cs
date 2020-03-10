@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-public class Wingame : MonoBehaviour
+public class Branch : MonoBehaviour
 {
-    public GameObject Player;
+     public GameObject Player;
     public Text action;
     // Start is called before the first frame update
     void Start()
@@ -17,13 +16,9 @@ public class Wingame : MonoBehaviour
     void Update()
     {
         var Distance =  this.transform.position.x - Player.transform.position.x;
-        if(Distance <= 1)
+        if(Distance <= 8)
         {
-            action.text = "Press E To Open";
-            if(Input.GetButtonDown("Action"))
-            {
-                SceneManager.LoadScene("Winscreen");
-            }
+            action.text = "Jump an grab!!!";
         }
         
     }
