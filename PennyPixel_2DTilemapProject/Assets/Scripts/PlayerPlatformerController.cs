@@ -9,18 +9,23 @@ public class PlayerPlatformerController : PhysicsObject
     public float jumpSpeed = 7;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
-    private int lives;
+    private int currentlives;
     public GameObject spikes;
     public GameObject fire;
+    public Text lives;
     public float maxSpeed = 7;
     // Start is called before the first frame update
     void Awake()
     {
+        PlayerPrefs.DeleteAll ();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        lives = 3;
+        currentlives = PlayerPrefs.GetInt("lives",3);
     }
-
+    public void Start()
+    {
+         
+    }
     protected override void ComputeVelocity()
     {
         Vector2 move = Vector2.zero;
@@ -44,8 +49,11 @@ public class PlayerPlatformerController : PhysicsObject
         animator.SetBool("grounded",grounded);
         animator.SetFloat("velocityX",Mathf.Abs(velocity.x) / maxSpeed);
         targetVelocity = move * maxSpeed;
-        if(lives <= 0)
+        if(PlayerPrefs.GetInt("lives",currentlives) <= 0)
         {
+            currentlives = 3;
+            PlayerPrefs.SetInt("lives",currentlives);
+            
             SceneManager.LoadScene("GameOver");
         }
     }
@@ -53,37 +61,37 @@ public class PlayerPlatformerController : PhysicsObject
     {
         if(other.gameObject.CompareTag("Spike"))
         {
-            
+            currentlives--;
+            PlayerPrefs.SetInt("lives",currentlives);
             spikes.GetComponent<Animation>().Play("Spike trap");
             StartCoroutine("resetPos");
-            lives--;
-            
-            Debug.Log(lives);
+            Debug.Log(PlayerPrefs.GetInt("lives",currentlives));
         }
         if(other.gameObject.CompareTag("fire"))
         {
             
             Instantiate(fire,new Vector3(this.transform.position.x,this.transform.position.y + 5,0),fire.transform.rotation);
-            Debug.Log(lives);
+            // Debug.Log(PlayerPrefs.GetInt("lives",currentlives));
         }
         if(other.gameObject.CompareTag("Fireball"))
         {
-            
-            
-            lives--;
-            Debug.Log(lives);
+            currentlives--;
+            PlayerPrefs.SetInt("lives",currentlives);
+            // Debug.Log(PlayerPrefs.GetInt("lives",currentlives));
             Destroy(other);
             StartCoroutine("resetPos");
         }
-        // if(other.gameObject.CompareTag("Spike"))
-        // {
-        //     lives--;
-        //     Debug.Log("Hep");
-        // }
     }
     IEnumerator resetPos() 
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.1f);
         this.transform.position = new Vector3(-1.69f,0,1);
+        this.velocity = Vector3.zero;
+    }
+    public void Update()
+    {
+        // Debug.Log(PlayerPrefs.GetInt("lives",currentlives));
+        lives.text = "Lives: " + PlayerPrefs.GetInt("lives",currentlives);
+        base.Update();
     }
 }

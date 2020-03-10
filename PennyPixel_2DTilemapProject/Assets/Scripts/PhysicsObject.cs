@@ -30,7 +30,7 @@ public class PhysicsObject : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         targetVelocity = Vector2.zero;
         ComputeVelocity();
@@ -42,18 +42,22 @@ public class PhysicsObject : MonoBehaviour
     void FixedUpdate()
     {
         velocity += gravityModifier * Physics2D.gravity * Time.deltaTime;
+        // Debug.Log("Vel " + velocity + "Grav " + gravityModifier + "2DGrav " + Physics2D.gravity + "Time " + Time.deltaTime);
         velocity.x = targetVelocity.x;
         grounded = false;
         Vector2 deltaPosition = velocity * Time.deltaTime;
         Vector2 moveAlongGround = new Vector2(groundNormal.y,-groundNormal.x);
         Vector2 move = moveAlongGround * deltaPosition.x;
         Movement(move,false);
+        // Debug.Log(deltaPosition.y);
         move = Vector2.up * deltaPosition.y;
+        // Debug.Log("Move2; " + move);
         Movement(move,true);
     }
     void Movement(Vector2 move,bool yMovement)
     {
         float distance = move.magnitude;
+        // Debug.Log("Move;" + move);
         if(distance > minMoveDistance)
         {
             int count = rb2d.Cast(move,contactFilter, hitBuffer, distance + shellRadius);
